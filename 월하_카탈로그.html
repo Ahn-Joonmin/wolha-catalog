@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>월하 제품 카탈로그</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f3ec; --paper:#fffdf9; --ink:#3b2a20; --sub:#7a6a5d; --line:#e4dacb;
+  --accent:#8a5a3b; --todo:#fff2b8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:300 15px/1.7 "Noto Sans KR",sans-serif;word-break:keep-all}
+img{display:block;width:100%;height:100%;object-fit:cover}
+a{color:inherit;text-decoration:none}
+.serif{font-family:"Gowun Batang",serif}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+/* 수정할 곳 표시 */
+.todo{background:var(--todo);border-bottom:1px dashed #c9a400;padding:0 3px}
+.hero .todo{color:var(--ink)}
+body.clean .hero .todo{color:#fff}
+body.clean .todo{background:none;border:0;padding:0}
+.toggle{position:fixed;right:16px;bottom:16px;z-index:50;background:var(--ink);color:#fff;border:0;border-radius:30px;padding:10px 16px;font:500 13px "Noto Sans KR";cursor:pointer;box-shadow:0 4px 14px #0003}
+
+/* 헤더 */
+.top{background:var(--ink);color:#e9dccb;text-align:center;font-size:12px;padding:7px}
+header{position:sticky;top:0;z-index:20;background:#f7f3ecee;backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-size:24px;letter-spacing:2px}
+.logo small{font-size:12px;color:var(--sub);margin-left:6px;letter-spacing:1px}
+nav{display:flex;gap:22px;font-size:14px}
+nav a:hover{color:var(--accent)}
+
+/* 히어로 */
+.hero{position:relative;height:min(78vh,640px);overflow:hidden}
+.hero img{object-position:center 60%}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(#0000 40%,#0007)}
+.hero .copy{position:absolute;inset:auto 0 56px;z-index:1;text-align:center;color:#fff}
+.hero h1{font-size:clamp(24px,4vw,40px);font-weight:400;margin-bottom:8px}
+.hero p{font-size:14px;opacity:.9}
+
+/* 카테고리 원형 */
+.cats{display:flex;justify-content:center;gap:clamp(14px,3vw,40px);padding:48px 0 16px;overflow-x:auto}
+.cats a{flex:0 0 auto;text-align:center;font-size:14px}
+.cats .c{width:clamp(76px,10vw,112px);aspect-ratio:1;border-radius:50%;overflow:hidden;margin:0 auto 10px;border:1px solid var(--line);background:var(--paper);transition:transform .2s}
+.cats a:hover .c{transform:translateY(-4px)}
+
+/* 섹션 공통 */
+section.block{padding:72px 0 24px}
+.head{text-align:center;margin-bottom:36px}
+.head .en{font-size:12px;letter-spacing:3px;color:var(--accent)}
+.head h2{font-size:clamp(22px,3vw,30px);font-weight:400;margin:6px 0}
+.head p{color:var(--sub);font-size:14px}
+
+/* 상품 카드 */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:28px 20px}
+.card{cursor:pointer}
+.card .ph{position:relative;aspect-ratio:4/5;overflow:hidden;background:#eee;border-radius:4px}
+.card .ph img{object-position:center 72%;transition:transform .5s}
+.card:hover .ph img{transform:scale(1.04)}
+.badge{position:absolute;left:10px;top:10px;background:var(--accent);color:#fff;font-size:11px;padding:2px 8px;border-radius:2px}
+.cnt{position:absolute;right:10px;bottom:10px;background:#0008;color:#fff;font-size:11px;padding:2px 8px;border-radius:20px}
+.card h3{font:400 18px "Gowun Batang",serif;margin:14px 0 4px}
+.card .d{color:var(--sub);font-size:13px;min-height:2.6em}
+.card .m{display:flex;justify-content:space-between;align-items:baseline;margin-top:10px;padding-top:10px;border-top:1px solid var(--line);font-size:13px;color:var(--sub)}
+.card .price{font-size:16px;font-weight:500;color:var(--ink)}
+
+/* 대표 메뉴 (큰 카드 1 + 작은 카드) */
+.best{display:grid;grid-template-columns:1.3fr 1fr 1fr;grid-template-rows:auto auto;gap:20px}
+.best .card:first-child{grid-row:span 2}
+.best .card:first-child .ph{aspect-ratio:auto;height:calc(100% - 120px);min-height:360px}
+.best .card .ph{aspect-ratio:1}
+
+/* 선물세트 */
+.gift{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:72px}
+.gift .in{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;padding:72px 20px}
+.gift .main{aspect-ratio:4/5;overflow:hidden;border-radius:4px}
+.gift h2{font-size:clamp(22px,3vw,30px);font-weight:400;margin:6px 0 14px}
+.spec{margin:22px 0;border-top:1px solid var(--line)}
+.spec div{display:flex;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.spec b{width:90px;font-weight:500;flex:0 0 auto}
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.strip div{aspect-ratio:1;overflow:hidden;border-radius:3px;cursor:pointer}
+
+/* 음료·식사 리스트형 */
+.menu{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.row{display:flex;gap:16px;background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:12px;cursor:pointer}
+.row .ph{width:110px;height:110px;flex:0 0 auto;overflow:hidden;border-radius:3px}
+.row h3{font:400 17px "Gowun Batang",serif}
+.row p{font-size:13px;color:var(--sub)}
+.row .price{margin-top:6px;font-weight:500}
+
+/* 매장 + 주문안내 */
+.store{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;height:360px}
+.store div{overflow:hidden;border-radius:4px}
+.order{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:40px}
+.order div{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:22px}
+.order .n{font:700 22px "Gowun Batang",serif;color:var(--accent)}
+.order h4{font-weight:500;margin:6px 0}
+.order p{font-size:13px;color:var(--sub)}
+footer{margin-top:80px;background:var(--ink);color:#cbbba8;font-size:13px;padding:40px 0}
+footer .logo{color:#fff;margin-bottom:10px}
+
+/* 상세 팝업 */
+dialog{margin:auto;border:0;padding:0;max-width:min(960px,94vw);width:100%;background:var(--paper);border-radius:6px}
+dialog::backdrop{background:#000a}
+.dlg{display:grid;grid-template-columns:1.1fr 1fr}
+.dlg .big{aspect-ratio:4/5;background:#eee}
+.dlg .big img{object-fit:contain;background:#f1eee9}
+.dlg .info{padding:28px;display:flex;flex-direction:column}
+.dlg h3{font:400 26px "Gowun Batang",serif}
+.dlg .th{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:auto;padding-top:18px}
+.dlg .th div{aspect-ratio:1;overflow:hidden;cursor:pointer;border-radius:3px;opacity:.6}
+.dlg .th div.on{opacity:1;outline:2px solid var(--accent)}
+.x{position:absolute;right:12px;top:8px;border:0;background:none;font-size:28px;cursor:pointer;color:var(--ink)}
+
+@media (max-width:820px){
+  nav{display:none}
+  .best{grid-template-columns:1fr 1fr}
+  .best .card:first-child{grid-column:span 2;grid-row:auto}
+  .best .card:first-child .ph{height:auto;aspect-ratio:4/3;min-height:0}
+  .gift .in{grid-template-columns:1fr;gap:28px;padding:48px 16px}
+  .store{grid-template-columns:1fr 1fr;height:auto}
+  .store div{aspect-ratio:1}
+  .store div:first-child{grid-column:span 2;aspect-ratio:16/9}
+  .order{grid-template-columns:1fr 1fr}
+  .dlg{grid-template-columns:1fr}
+  .dlg .big{aspect-ratio:1}
+  .grid{grid-template-columns:1fr 1fr;gap:20px 12px}
+  .wrap{padding:0 16px}
+}
+</style>
+</head>
+<body>
+
+<div class="top">명절·답례 단체 주문은 <span class="todo">0일 전</span>까지 예약해 주세요</div>
+<header><div class="wrap">
+  <a class="logo serif" href="#">月下 월하<small>떡카페</small></a>
+  <nav><a href="#best">대표메뉴</a><a href="#songpyeon">송편</a><a href="#chaltteok">찰떡·고물떡</a><a href="#kkul">꿀떡·이티떡</a><a href="#gift">선물세트</a><a href="#drink">음료·식사</a><a href="#order">주문안내</a></nav>
+</div></header>
+
+<div class="hero">
+  <img src="img/손송편.jpg" alt="월하 손송편">
+  <div class="copy serif">
+    <h1>달빛 아래, 손으로 빚은 떡</h1>
+    <p class="todo">매일 아침 국산 쌀로 정성껏 빚습니다 (브랜드 카피 자리)</p>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="cats" id="cats"></div>
+
+  <section class="block" id="best">
+    <div class="head"><div class="en">BEST</div><h2 class="serif">월하 대표 메뉴</h2><p>처음 오셨다면 이 떡부터 맛보세요</p></div>
+    <div class="best" id="bestGrid"></div>
+  </section>
+
+  <section class="block" id="songpyeon">
+    <div class="head"><div class="en">SONGPYEON</div><h2 class="serif">송편</h2><p class="todo">손으로 하나하나 빚은 월하의 송편 (카테고리 소개 자리)</p></div>
+    <div class="grid" data-cat="songpyeon"></div>
+  </section>
+
+  <section class="block" id="chaltteok">
+    <div class="head"><div class="en">CHALTTEOK</div><h2 class="serif">찰떡 · 고물떡</h2><p class="todo">찹쌀과 고물로 깊은 맛을 낸 떡 (카테고리 소개 자리)</p></div>
+    <div class="grid" data-cat="chaltteok"></div>
+  </section>
+
+  <section class="block" id="kkul">
+    <div class="head"><div class="en">KKULTTEOK</div><h2 class="serif">꿀떡 · 이티떡</h2><p class="todo">한입에 쏙, 가볍게 즐기는 떡 (카테고리 소개 자리)</p></div>
+    <div class="grid" data-cat="kkul"></div>
+  </section>
+</div>
+
+<section class="gift" id="gift"><div class="wrap in">
+  <div class="main" id="giftMain"></div>
+  <div>
+    <div class="head" style="text-align:left;margin:0"><div class="en">GIFT SET</div></div>
+    <h2 class="serif">월하 떡 선물세트</h2>
+    <p style="color:var(--sub)" class="todo">마음을 전하는 자리에, 월하의 떡을 한 상자에 담았습니다. (고향사랑기부제 답례품 / 명절 선물 소개 자리)</p>
+    <div class="spec">
+      <div><b>구성</b><span class="todo">두텁떡 0, 이티떡 0, 송편 0, 약식 0 …</span></div>
+      <div><b>가격</b><span class="todo">00,000원</span></div>
+      <div><b>보관</b><span class="todo">실온 0일 / 냉동 0개월</span></div>
+      <div><b>배송</b><span class="todo">택배·퀵·매장 픽업</span></div>
+    </div>
+    <div class="strip" id="giftStrip"></div>
+  </div>
+</div></section>
+
+<div class="wrap">
+  <section class="block" id="drink">
+    <div class="head"><div class="en">DRINK &amp; MEAL</div><h2 class="serif">음료 · 식사</h2><p>떡과 함께 곁들이기 좋은 메뉴</p></div>
+    <div class="menu" data-cat="drink"></div>
+  </section>
+
+  <section class="block" id="order">
+    <div class="head"><div class="en">STORE &amp; ORDER</div><h2 class="serif">매장 · 주문 안내</h2></div>
+    <div class="store"><div><img src="img/카페1.jpg" alt=""></div><div><img src="img/카페2.jpg" alt=""></div><div><img src="img/카페3.jpg" alt=""></div></div>
+    <div class="order">
+      <div><div class="n">01</div><h4>메뉴 선택</h4><p>카탈로그에서 떡 종류와 수량을 골라 주세요.</p></div>
+      <div><div class="n">02</div><h4>주문 문의</h4><p>전화 <span class="todo">000-0000-0000</span> 또는 카카오톡 <span class="todo">@월하</span></p></div>
+      <div><div class="n">03</div><h4>예약 확정</h4><p>수령일 <span class="todo">0일 전</span>까지 예약 · 단체 주문은 <span class="todo">0일 전</span></p></div>
+      <div><div class="n">04</div><h4>수령</h4><p class="todo">매장 픽업 / 택배 / 퀵 (가능 지역)</p></div>
+    </div>
+  </section>
+</div>
+
+<footer><div class="wrap">
+  <div class="logo serif">月下 월하</div>
+  <p class="todo">주소 · 영업시간 · 사업자정보 자리</p>
+</div></footer>
+
+<button class="toggle" onclick="document.body.classList.toggle('clean');this.textContent=document.body.classList.contains('clean')?'수정할 곳 보기':'완성본 미리보기'">완성본 미리보기</button>
+
+<dialog id="dlg"><button class="x" onclick="dlg.close()">×</button><div class="dlg">
+  <div class="big"><img id="dBig" alt=""></div>
+  <div class="info">
+    <div class="head" style="text-align:left;margin:0"><div class="en" id="dCat"></div></div>
+    <h3 id="dName"></h3>
+    <p style="color:var(--sub);margin:8px 0 16px" id="dDesc"></p>
+    <div class="spec" id="dSpec" style="margin:0"></div>
+    <div class="th" id="dTh"></div>
+  </div>
+</div></dialog>
+
+<script>
+// ===== 제품 데이터: 이 부분만 고치면 카탈로그 전체가 바뀝니다 =====
+// 이름/설명/재료/구성/가격은 초안입니다. 노란 표시(todo)는 꼭 확인할 칸.
+const seq = (base, from, to, pre = []) => [...pre, ...Array.from({length: to - from + 1}, (_, i) => `${base}${from + i}.jpg`)];
+const P = [
+  // 송편
+  {cat:'songpyeon', name:'손송편 (오색)', badge:'BEST', desc:'다섯 가지 색으로 빚은 월하의 시그니처 송편', ing:'멥쌀, 쑥, 단호박, 흑임자, 깨·꿀소', unit:'0개 / 0g', price:'0,000원',
+   img:['손송편10.jpg', '손송편.jpg', ...seq('손송편', 2, 9), ...seq('손송편', 11, 16), '손송편(백).jpg', '손송편(분).jpg']},
+  {cat:'songpyeon', name:'흰송편', desc:'쌀 본연의 맛을 살린 담백한 송편', ing:'멥쌀, 깨·꿀소', unit:'0개 / 0g', price:'0,000원',
+   img:seq('흰송편접시', 2, 4, ['흰송편접시.jpg'])},
+  {cat:'songpyeon', name:'분홍송편', desc:'고운 분홍빛, 선물용으로 인기', ing:'멥쌀, (천연색소), 깨·꿀소', unit:'0개 / 0g', price:'0,000원',
+   img:['분홍송편접시.jpg', '분홍송편접시1.jpg']},
+  {cat:'songpyeon', name:'쑥송편', desc:'향긋한 국산 쑥을 듬뿍 넣은 송편', ing:'멥쌀, 쑥, 깨·꿀소', unit:'0개 / 0g', price:'0,000원',
+   img:['쑥송편접시.jpg', '쑥송편.jpg', '쑥송편접시2.jpg']},
+  {cat:'songpyeon', name:'동전송편', badge:'NEW', desc:'한입 크기의 동글납작한 송편 (분홍·쑥)', ing:'멥쌀, 쑥, 깨·꿀소', unit:'0개 / 0g', price:'0,000원',
+   img:['동전송편분홍.jpg', '동전송편분홍2.jpg', '동전송편쑥.jpg', '동전송편쑥2.jpg', '동전송편.jpg', '동전송편(쑥).jpg']},
+  {cat:'songpyeon', name:'오색송편 (커팅)', desc:'단면까지 예쁜 오색 송편, 꿀과 함께', ing:'멥쌀, 천연가루 5종, 꿀', unit:'0개 / 0g', price:'0,000원',
+   img:['오색송편커팅.jpg', ...seq('오색송편커팅', 2, 5), '오색송편.jpg', '오색송편+꿀.jpg', 'r_오색송편커팅4.jpg']},
+  // 찰떡·고물떡
+  {cat:'chaltteok', name:'두텁떡', badge:'BEST', desc:'궁중에서 즐기던 귀한 떡, 거피팥 고물을 두툼하게', ing:'찹쌀, 대추, 밤, 계피, 꿀', unit:'0개 / 0g', price:'0,000원',
+   img:['두텁떡접시.jpg', '두텁떡접시2.jpg', '두텁떡2.jpg', '두텁떡3.jpg', '두텁떡4.jpg', '두텁떡5.jpg', '두텁떡.jpg']}, // 두텁떡6·7은 4·5와 같은 파일이라 제외
+  {cat:'chaltteok', name:'흑임자떡', desc:'고소한 흑임자 고물을 넉넉히 묻힌 찰떡', ing:'찹쌀, 흑임자', unit:'0개 / 0g', price:'0,000원',
+   img:['흑임자접시.jpg', ...seq('흑임자접시', 2, 4), '흑임자.jpg', ...seq('흑임자', 2, 5), 'r_흑임자.jpg', '흑임자떡.jpg']},
+  {cat:'chaltteok', name:'호박인절미', desc:'달큰한 단호박을 넣은 인절미', ing:'찹쌀, 단호박, 콩고물', unit:'0개 / 0g', price:'0,000원',
+   img:['호박인절미.jpg']},
+  {cat:'chaltteok', name:'호박편', desc:'단호박을 넣어 부드럽게 찐 편떡', ing:'멥쌀, 단호박', unit:'0개 / 0g', price:'0,000원',
+   img:['호박편접시.jpg', '호박편접시2.jpg', '호박편접시3.jpg']},
+  {cat:'chaltteok', name:'약식', desc:'밤·대추·잣을 넣어 달콤하게 지은 약밥', ing:'찹쌀, 밤, 대추, 잣, 흑설탕, 참기름', unit:'0개 / 0g', price:'0,000원',
+   img:seq('약식', 1, 4)},
+  // 꿀떡·이티떡
+  {cat:'kkul', name:'꿀떡', desc:'톡 터지는 꿀 소가 가득한 한입 떡', ing:'멥쌀, 꿀, 깨', unit:'0개 / 0g', price:'0,000원',
+   img:['꿀떡 여러개.jpg', '꿀떡 여러개 2.jpg', '꿀떡 여러개 3.jpg', '꿀떡접시.jpg', '꿀떡 접시.jpg', '꿀떡2.jpg', '꿀떡3.jpg', '꿀떡4.jpg', '꿀턱1.jpg', '꿀떡.jpg']},
+  {cat:'kkul', name:'이티떡', badge:'BEST', desc:'쫀득한 찰떡에 고소한 고물을 입힌 월하 인기 메뉴', ing:'찹쌀, 앙금, 고물', unit:'0개 / 0g', price:'0,000원',
+   img:['이티떡1.jpg', '이티떡2.jpg', '이티떡3.jpg', '이티떡.jpg']},
+  {cat:'kkul', name:'모둠 (송편·꿀떡·이티떡)', desc:'인기 떡을 한 번에 맛보는 모둠 구성', ing:'구성에 따라 다름', unit:'0종 / 0개', price:'0,000원',
+   img:['송편꿀떡이티떡.jpg']},
+  // 음료·식사
+  {cat:'drink', name:'식혜', desc:'직접 엿기름을 걸러 만든 전통 식혜', ing:'쌀, 엿기름', unit:'0ml', price:'0,000원', img:seq('식혜', 1, 6, ['식혜.jpg'])},
+  {cat:'drink', name:'대추차', desc:'대추를 오래 달여 진하게', ing:'대추, 생강', unit:'0ml', price:'0,000원', img:['대추차1.jpg', '대추차2.jpg', '대추차3.jpg', '대추차5.jpg']},
+  {cat:'drink', name:'오미자차', desc:'새콤달콤 다섯 가지 맛의 오미자', ing:'오미자', unit:'0ml', price:'0,000원', img:seq('오미자', 1, 8)},
+  {cat:'drink', name:'전통음료 세트', desc:'오미자·식혜·대추차 선물 구성', ing:'오미자, 식혜, 대추차', unit:'0병', price:'00,000원',
+   img:['오미자식혜대추차.jpg', ...seq('오미자식혜대추차', 2, 6), '식혜대추차.jpg', ...seq('식혜대추차', 1, 6), '오미자식혜1.jpg', '오미자식혜2.jpg']},
+  {cat:'drink', name:'육개장', desc:'얼큰하고 깊은 국물의 육개장', ing:'소고기, 고사리, 대파', unit:'0인분', price:'0,000원', img:seq('육개장', 1, 6, ['육개장.jpg'])},
+  {cat:'drink', name:'장어추어탕', desc:'몸보신에 좋은 장어 추어탕', ing:'장어, 시래기, 들깨', unit:'0인분', price:'0,000원',
+   img:['장어추어탕1.jpg', '장어추어탕2.jpg', '장어추어탕3.jpg', '장어추어탕4.jpg', '장어추어탕5.jpg', '장어추어탕12.jpg', ...seq('장어추어탕 육개장', 1, 10)]},
+];
+const GIFT = {cat:'gift', name:'월하 떡 선물세트', desc:'고향사랑기부제 답례품 · 명절 선물', ing:'구성 떡 기재', unit:'0종 0개', price:'00,000원', img:seq('떡선물세트(고향사랑기부제)', 1, 14)};
+const CAT_NAME = {songpyeon:'SONGPYEON · 송편', chaltteok:'CHALTTEOK · 찰떡·고물떡', kkul:'KKULTTEOK · 꿀떡·이티떡', drink:'DRINK & MEAL · 음료·식사', gift:'GIFT SET · 선물세트'};
+// ================================================================
+
+const src = f => 'img/' + encodeURIComponent(f);
+const im = f => `<img loading="lazy" src="${src(f)}" alt="">`;
+const T = s => `<span class="todo">${s}</span>`;
+
+const card = (p, i) => `<div class="card" data-i="${i}">
+  <div class="ph">${im(p.img[0])}${p.badge ? `<span class="badge">${p.badge}</span>` : ''}${p.img.length > 1 ? `<span class="cnt">사진 ${p.img.length}</span>` : ''}</div>
+  <h3>${p.name}</h3><p class="d">${T(p.desc)}</p>
+  <div class="m"><span>${T(p.unit)}</span><span class="price">${T(p.price)}</span></div></div>`;
+
+document.querySelectorAll('.grid[data-cat]').forEach(g =>
+  g.innerHTML = P.map((p, i) => p.cat === g.dataset.cat ? card(p, i) : '').join(''));
+document.querySelector('.menu').innerHTML = P.map((p, i) => p.cat !== 'drink' ? '' :
+  `<div class="row" data-i="${i}"><div class="ph">${im(p.img[0])}</div><div><h3>${p.name}</h3><p>${T(p.desc)}</p><p class="price">${T(p.price)}</p></div></div>`).join('');
+document.getElementById('bestGrid').innerHTML = P.map((p, i) => [p, i]).filter(([p]) => p.badge === 'BEST')
+  .concat([[P[4], 4], [P[5], 5]]).map(([p, i]) => card(p, i)).join('');
+
+// 카테고리 원형 아이콘
+document.getElementById('cats').innerHTML = [
+  ['#songpyeon', '송편', '흰송편접시.jpg'], ['#chaltteok', '찰떡·고물떡', '두텁떡접시.jpg'], ['#kkul', '꿀떡·이티떡', '꿀떡 여러개.jpg'],
+  ['#gift', '선물세트', '떡선물세트(고향사랑기부제)5.jpg'], ['#drink', '음료·식사', '오미자식혜대추차.jpg'], ['#order', '주문안내', '카페1.jpg'],
+].map(([h, t, f]) => `<a href="${h}"><div class="c">${im(f)}</div>${t}</a>`).join('');
+
+// 선물세트
+document.getElementById('giftMain').innerHTML = im(GIFT.img[0]);
+document.getElementById('giftStrip').innerHTML = GIFT.img.slice(1, 9).map(f => `<div data-gift>${im(f)}</div>`).join('');
+
+// 상세 팝업
+const dlg = document.getElementById('dlg');
+function open(p, start = 0) {
+  dName.textContent = p.name; dCat.textContent = CAT_NAME[p.cat];
+  dDesc.innerHTML = T(p.desc);
+  dSpec.innerHTML = [['재료', p.ing], ['구성', p.unit], ['가격', p.price], ['보관', '실온 0일 / 냉동 0개월']].map(([k, v]) => `<div><b>${k}</b>${T(v)}</div>`).join('');
+  dTh.innerHTML = p.img.map((f, j) => `<div data-f="${f}">${im(f)}</div>`).join('');
+  show(p.img[start]); dlg.showModal();
+}
+function show(f) {
+  dBig.src = src(f);
+  dTh.querySelectorAll('div').forEach(d => d.classList.toggle('on', d.dataset.f === f));
+}
+dTh.onclick = e => { const d = e.target.closest('[data-f]'); if (d) show(d.dataset.f); };
+dlg.onclick = e => { if (e.target === dlg) dlg.close(); };
+document.body.addEventListener('click', e => {
+  const c = e.target.closest('[data-i]'); if (c) return open(P[c.dataset.i]);
+  const g = e.target.closest('[data-gift], #giftMain'); if (g) open(GIFT, g.dataset.gift !== undefined ? [...g.parentNode.children].indexOf(g) + 1 : 0);
+});
+</script>
+</body>
+</html>
